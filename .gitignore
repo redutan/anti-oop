@@ -102,6 +102,10 @@ local.properties
 ## Plugin-specific files:
 
 # IntelliJ
+/.idea
+/.mvn
+/mvnw.cmd
+/mvnw
 /out/
 
 # mpeltonen/sbt-idea plugin
