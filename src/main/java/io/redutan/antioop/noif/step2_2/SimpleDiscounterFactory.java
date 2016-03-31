@@ -6,7 +6,7 @@ import io.redutan.antioop.noif.DiscounterFactory;
 /**
  * Created by redutan on 2016. 4. 1..
  */
-public class SimpleDiscounterFactory implements DiscounterFactory {
+class SimpleDiscounterFactory implements DiscounterFactory {
     @Override
     public Discountable getDiscounter(String discountCode) {
         if ("NAVER".equals(discountCode)) {   // 네이버검색 할인
