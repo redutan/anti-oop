@@ -3,11 +3,13 @@ package io.redutan.antioop.noif.step1;
 import io.redutan.antioop.noif.Discount;
 import io.redutan.antioop.noif.DiscountRequest;
 import io.redutan.antioop.noif.PaymentRequest;
+import io.redutan.antioop.noif.PaymentService;
 
 /**
  * Created by redutan on 2016. 4. 1..
  */
-public class PaymentService1 {
+public class PaymentService1 implements PaymentService {
+    @Override
     // 실시간 할인내역 확인
     public Discount getDiscount(DiscountRequest request) {
         // 상품금액
@@ -20,6 +22,7 @@ public class PaymentService1 {
         return Discount.of(discountAmt);
     }
 
+    @Override
     // 결제처리
     public void payment(PaymentRequest request) {
         // 상품금액

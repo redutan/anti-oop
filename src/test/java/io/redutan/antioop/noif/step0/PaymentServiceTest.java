@@ -12,11 +12,11 @@ import static org.junit.Assert.assertThat;
  * Created by redutan on 2016. 4. 1..
  */
 public class PaymentServiceTest {
-    PaymentService service;
+    LegacyPaymentService service;
 
     @Before
     public void setUp() throws Exception {
-        service = new PaymentService();
+        service = new LegacyPaymentService();
     }
 
     @Test

@@ -8,11 +8,11 @@ import org.springframework.stereotype.Repository;
  * Created by redutan on 2016. 4. 1..
  */
 @Repository
-public interface DiscounterRepository extends JpaRepository<AbstractDiscounter, Long> {
+public interface DiscounterRepository<T extends AbstractDiscounter> extends JpaRepository<T, Long> {
     /**
      * 할인코드로 할인 조회
      * @param code 할인코드
      * @return
      */
-    AbstractDiscounter findByCode(String code);
+    T findByCode(String code);
 }

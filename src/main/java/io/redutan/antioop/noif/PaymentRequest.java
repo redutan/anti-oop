@@ -3,7 +3,7 @@ package io.redutan.antioop.noif;
 import lombok.Value;
 
 /**
- * 결제요청 파라메터
+ * 결제 요청 파라메터 DTO
  * Created by redutan on 2016. 4. 1..
  */
 @Value

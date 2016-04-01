@@ -1,17 +1,15 @@
 package io.redutan.antioop.noif.step_enum;
 
-import io.redutan.antioop.noif.Discount;
-import io.redutan.antioop.noif.DiscountRequest;
-import io.redutan.antioop.noif.Discountable;
-import io.redutan.antioop.noif.PaymentRequest;
+import io.redutan.antioop.noif.*;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created by redutan on 2016. 4. 1..
  */
 @Slf4j
-public class PaymentServiceEnum {
+public class PaymentServiceEnum implements PaymentService {
     // 실시간 할인내역 확인
+    @Override
     public Discount getDiscount(DiscountRequest request) {
         // 상품금액
         long productAmt = request.getProductAmt();
@@ -26,6 +24,7 @@ public class PaymentServiceEnum {
     }
 
     // 결제처리
+    @Override
     public void payment(PaymentRequest request) {
         // 상품금액
         long productAmt = request.getProductAmt();

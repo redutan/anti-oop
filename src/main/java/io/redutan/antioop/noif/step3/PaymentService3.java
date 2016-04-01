@@ -8,12 +8,13 @@ import org.springframework.stereotype.Service;
  * Created by redutan on 2016. 4. 1..
  */
 @Service
-public class PaymentService3 {
+public class PaymentService3 implements PaymentService {
 
     @Autowired
     private DiscounterFactory discounterFactory;
 
     // 실시간 할인내역 확인
+    @Override
     public Discount getDiscount(DiscountRequest request) {
         // 상품금액
         long productAmt = request.getProductAmt();
@@ -28,6 +29,7 @@ public class PaymentService3 {
     }
 
     // 결제처리
+    @Override
     public void payment(PaymentRequest request) {
         // 상품금액
         long productAmt = request.getProductAmt();

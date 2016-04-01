@@ -5,7 +5,7 @@ import io.redutan.antioop.noif.*;
 /**
  * Created by redutan on 2016. 4. 1..
  */
-public class PaymentService2_2 {
+public class PaymentService2_2 implements PaymentService {
 
     private DiscounterFactory discounterFactory;
 
@@ -14,6 +14,7 @@ public class PaymentService2_2 {
     }
 
     // 실시간 할인내역 확인
+    @Override
     public Discount getDiscount(DiscountRequest request) {
         // 상품금액
         long productAmt = request.getProductAmt();
@@ -28,6 +29,7 @@ public class PaymentService2_2 {
     }
 
     // 결제처리
+    @Override
     public void payment(PaymentRequest request) {
         // 상품금액
         long productAmt = request.getProductAmt();
