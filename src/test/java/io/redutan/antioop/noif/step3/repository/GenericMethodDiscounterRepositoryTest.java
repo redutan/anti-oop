@@ -26,9 +26,9 @@ import static org.junit.Assert.*;
 @SpringApplicationConfiguration(classes = AntiOopApplication.class)
 @Transactional
 @Slf4j
-public class DiscounterRepository2Test {
+public class GenericMethodDiscounterRepositoryTest {
     @Autowired
-    DiscounterRepository2 repository;
+    GenericMethodDiscounterRepository repository;
 
     @Autowired
     DiscounterRepository<AbstractDiscounter> abstractRepository;
