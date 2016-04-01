@@ -23,6 +23,7 @@ bin/
 tmp/
 *.tmp
 *.bak
+/lib
 *.swp
 *~.nib
 local.properties

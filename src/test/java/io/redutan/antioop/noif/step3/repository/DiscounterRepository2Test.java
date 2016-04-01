@@ -17,19 +17,21 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 /**
- * Created by redutan on 2016. 4. 1..
+ * Created by myeongju.jung on 2016. 4. 1..
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = AntiOopApplication.class)
 @Transactional
 @Slf4j
-public class DiscounterRepositoryTest {
-	
-	@Autowired
-    DiscounterRepository<AbstractDiscounter> repository;
+public class DiscounterRepository2Test {
+    @Autowired
+    DiscounterRepository2 repository;
+
+    @Autowired
+    DiscounterRepository<AbstractDiscounter> abstractRepository;
 
     @Before
     public void setUp() throws Exception {
@@ -50,7 +52,7 @@ public class DiscounterRepositoryTest {
 
         List<AbstractDiscounter> list = Arrays.asList(naverDiscounter, danawaDiscounter, fancafeDiscounter);
 
-        repository.save(list);
+        abstractRepository.save(list);
     }
 
     @Test
@@ -58,7 +60,7 @@ public class DiscounterRepositoryTest {
         // Given
         final String code = "NAVER";
         // When
-        AbstractDiscounter discounter = repository.findByCode(code);
+        RateDiscounter discounter = repository.findByCode(code);
         log.info("{} discounter = {}", code, discounter);
         // Then
         assertDiscounter(discounter, code, 20000, 2000);
@@ -69,7 +71,7 @@ public class DiscounterRepositoryTest {
         // Given
         final String code = "DANAWA";
         // When
-        AbstractDiscounter discounter = repository.findByCode(code);
+        RateDiscounter discounter = repository.findByCode(code);
         log.info("{} discounter = {}", code, discounter);
         // Then
         assertDiscounter(discounter, code, 20000, 3000);
@@ -80,7 +82,32 @@ public class DiscounterRepositoryTest {
         // Given
         final String code = "FANCAFE";
         // When
+        AmtDiscounter discounter = repository.findByCode(code);
+        log.info("{} discounter = {}", code, discounter);
+        // Then
+        assertDiscounter(discounter, code, 20000, 1000);
+    }
+
+    @Test
+    public void findByCode_FancafeAbstract() throws Exception {
+        // Given
+        final String code = "FANCAFE";
+        // When
         AbstractDiscounter discounter = repository.findByCode(code);
+        log.info("{} discounter = {}", code, discounter);
+        // Then
+        assertDiscounter(discounter, code, 20000, 1000);
+    }
+
+    // 예상했던 대로 casting 오류가 발생한다
+    // java.lang.ClassCastException:
+    //     AmtDiscounter cannot be cast to RateDiscounter
+    @Test(expected = ClassCastException.class)
+    public void findByCode_FancafeRate() throws Exception {
+        // Given
+        final String code = "FANCAFE";
+        // When
+        RateDiscounter discounter = repository.findByCode(code);
         log.info("{} discounter = {}", code, discounter);
         // Then
         assertDiscounter(discounter, code, 20000, 1000);

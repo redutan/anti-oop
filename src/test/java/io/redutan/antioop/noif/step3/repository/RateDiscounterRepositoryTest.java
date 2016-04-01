@@ -17,19 +17,22 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.*;
 
 /**
- * Created by redutan on 2016. 4. 1..
+ * Created by myeongju.jung on 2016. 4. 1..
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = AntiOopApplication.class)
 @Transactional
 @Slf4j
-public class DiscounterRepositoryTest {
-	
-	@Autowired
-    DiscounterRepository<AbstractDiscounter> repository;
+public class RateDiscounterRepositoryTest {
+    @Autowired
+    RateDiscounterRepository repository;
+
+    @Autowired
+    DiscounterRepository<AbstractDiscounter> abstractRepository;
 
     @Before
     public void setUp() throws Exception {
@@ -50,7 +53,7 @@ public class DiscounterRepositoryTest {
 
         List<AbstractDiscounter> list = Arrays.asList(naverDiscounter, danawaDiscounter, fancafeDiscounter);
 
-        repository.save(list);
+        abstractRepository.save(list);
     }
 
     @Test
@@ -58,7 +61,7 @@ public class DiscounterRepositoryTest {
         // Given
         final String code = "NAVER";
         // When
-        AbstractDiscounter discounter = repository.findByCode(code);
+        RateDiscounter discounter = repository.findByCode(code);
         log.info("{} discounter = {}", code, discounter);
         // Then
         assertDiscounter(discounter, code, 20000, 2000);
@@ -69,21 +72,22 @@ public class DiscounterRepositoryTest {
         // Given
         final String code = "DANAWA";
         // When
-        AbstractDiscounter discounter = repository.findByCode(code);
+        RateDiscounter discounter = repository.findByCode(code);
         log.info("{} discounter = {}", code, discounter);
         // Then
         assertDiscounter(discounter, code, 20000, 3000);
     }
 
+    // 예상대로 null이 발생한다.
     @Test
     public void findByCode_Fancafe() throws Exception {
         // Given
         final String code = "FANCAFE";
         // When
-        AbstractDiscounter discounter = repository.findByCode(code);
+        RateDiscounter discounter = repository.findByCode(code);
         log.info("{} discounter = {}", code, discounter);
         // Then
-        assertDiscounter(discounter, code, 20000, 1000);
+        assertThat(discounter, is(nullValue()));
     }
 
     private void assertDiscounter(AbstractDiscounter discounter, String code, long amt, long discountAmt) {

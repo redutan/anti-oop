@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 class SimpleDiscounterFactory implements DiscounterFactory {
     @Autowired
-    DiscounterRepository discounterRepository;
+    private DiscounterRepository<AbstractDiscounter> discounterRepository;
 
     @Override
     public Discountable getDiscounter(String discountCode) {

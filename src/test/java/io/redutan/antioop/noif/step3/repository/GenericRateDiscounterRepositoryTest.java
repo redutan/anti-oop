@@ -17,18 +17,21 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.*;
 
 /**
- * Created by redutan on 2016. 4. 1..
+ * Created by myeongju.jung on 2016. 4. 1..
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = AntiOopApplication.class)
 @Transactional
 @Slf4j
-public class DiscounterRepositoryTest {
-	
-	@Autowired
+public class GenericRateDiscounterRepositoryTest {
+    @Autowired
+    DiscounterRepository<RateDiscounter> rateDiscounterRepository;
+
+    @Autowired
     DiscounterRepository<AbstractDiscounter> repository;
 
     @Before
@@ -58,7 +61,7 @@ public class DiscounterRepositoryTest {
         // Given
         final String code = "NAVER";
         // When
-        AbstractDiscounter discounter = repository.findByCode(code);
+        RateDiscounter discounter = rateDiscounterRepository.findByCode(code);
         log.info("{} discounter = {}", code, discounter);
         // Then
         assertDiscounter(discounter, code, 20000, 2000);
@@ -69,18 +72,33 @@ public class DiscounterRepositoryTest {
         // Given
         final String code = "DANAWA";
         // When
-        AbstractDiscounter discounter = repository.findByCode(code);
+        RateDiscounter discounter = rateDiscounterRepository.findByCode(code);
         log.info("{} discounter = {}", code, discounter);
         // Then
         assertDiscounter(discounter, code, 20000, 3000);
     }
 
-    @Test
+    /**
+     * casting 오류 발생. 개인적으로 null일 발생하지 않을까 했는데 조회가 가능하긴 하다.
+     * Entity가 다른데 조회가 되는 것 자체가 신기하다.
+     * @throws Exception
+     */
+    @Test(expected = ClassCastException.class)
     public void findByCode_Fancafe() throws Exception {
         // Given
         final String code = "FANCAFE";
         // When
-        AbstractDiscounter discounter = repository.findByCode(code);
+        RateDiscounter discounter = rateDiscounterRepository.findByCode(code);
+        fail();
+    }
+
+    // RateDiscounter repository를 사용할지라도 AmtDiscounter를 조회할 수 있다. (SINGE_TABLE, JOINED 상속 전략)
+    @Test
+    public void findByCode_FancafeAbstract() throws Exception {
+        // Given
+        final String code = "FANCAFE";
+        // When
+        AbstractDiscounter discounter = rateDiscounterRepository.findByCode(code);
         log.info("{} discounter = {}", code, discounter);
         // Then
         assertDiscounter(discounter, code, 20000, 1000);
