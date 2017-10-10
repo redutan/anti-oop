@@ -2,7 +2,6 @@
 
 안티-OOP에 대한 샘플코드
 
-- 반복되는 분기문
-- ???
-- ???
-- ???
+Article
+* http://meetup.toast.com/posts/94
+* http://redutan.github.io/2016/03/31/anti-oop-if
